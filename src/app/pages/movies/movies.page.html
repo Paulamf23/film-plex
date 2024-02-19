@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="light dark">
+    <ion-title ><img src='../../../assets/logo.png'></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item button *ngFor="let item of movies" [routerLink]="[item.id]">
+
+      <ion-avatar slot="start">
+        <img [src]="imageBaseUrl + '/w92' + item.poster_path"/>
+      </ion-avatar>
+      <ion-label>
+        {{item.title}}
+        <p>{{item.release_date | date:'y'}}</p>
+        <!-- Añadir aqui el menu seleccionable de en que lista está -->
+        <!-- Ordenar por puntuación (vote_average) -->
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
