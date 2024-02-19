@@ -1,24 +1,37 @@
 <ion-header>
   <ion-toolbar color="light dark">
-    <ion-title ><img src='../../../assets/logo.png'></ion-title>
+    <ion-title class="title"><img class="img-logo" src='../../../assets/logo.png'></ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
+    <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="searchMovies()" class="custom-searchbar"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <!-- Mostrar la lista de películas solo si no se está realizando una búsqueda -->
+  <ion-title class="title" *ngIf="!isSearching">TOP 20</ion-title>
+  <ion-list *ngIf="!isSearching">
     <ion-item button *ngFor="let item of movies" [routerLink]="[item.id]">
-
       <ion-avatar slot="start">
         <img [src]="imageBaseUrl + '/w92' + item.poster_path"/>
       </ion-avatar>
       <ion-label>
         {{item.title}}
         <p>{{item.release_date | date:'y'}}</p>
-        <!-- Añadir aqui el menu seleccionable de en que lista está -->
-        <!-- Ordenar por puntuación (vote_average) -->
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mostrar la lista de películas solo si se está realizando una búsqueda -->
+  <ion-list *ngIf="isSearching">
+    <ion-item button *ngFor="let item of movies" [routerLink]="[item.id]">
+      <ion-avatar slot="start">
+        <img [src]="imageBaseUrl + '/w92' + item.poster_path"/>
+      </ion-avatar>
+      <ion-label>
+        {{item.title}}
+        <p>{{item.release_date | date:'y'}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

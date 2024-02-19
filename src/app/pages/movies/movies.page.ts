@@ -12,26 +12,41 @@ export class MoviesPage implements OnInit {
 
   movies = [] as any[];
   imageBaseUrl = environment.images;
-
+  searchQuery: string = '';
+  isSearching: boolean = false;
 
   constructor(private _movieService: MovieService, private _loadingCtrl: LoadingController) {}
 
   ngOnInit() {
     this.loadMovies();
-}
+  }
 
-  async loadMovies(){
+  async loadMovies() {
     const loading = await this._loadingCtrl.create({
       message: 'Loading...',
       spinner: 'bubbles',
     });
     await loading.present();
 
-    this._movieService.getTopMovies().subscribe(res => {
-      loading.dismiss();
-      this.movies.push(...res.results);
-      res.total_results = 10;
-      console.log(res);
-  })
+    if (!this.isSearching) {
+      this._movieService.getTopMovies().subscribe(res => {
+        loading.dismiss();
+        this.movies = res.results;
+      });
+    } else {
+      this.searchMovies();
+    }
+  }
+
+  searchMovies() {
+    this.isSearching = this.searchQuery.trim() !== '';
+
+    if (this.isSearching) {
+      this._movieService.searchMovies(this.searchQuery).subscribe(res => {
+        this.movies = res.results;
+      });
+    } else {
+      this.loadMovies();
+    }
   }
 }
