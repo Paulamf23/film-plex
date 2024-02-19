@@ -14,7 +14,15 @@ const routes: Routes = [
   {
     path: 'movies/:id',
     loadChildren: () => import('./pages/movie-details/movie-details.module').then( m => m.MovieDetailsPageModule)
+  },  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'adv-search',
+    loadChildren: () => import('./pages/adv-search/adv-search.module').then( m => m.AdvSearchPageModule)
   }
+
 
 ];
 
