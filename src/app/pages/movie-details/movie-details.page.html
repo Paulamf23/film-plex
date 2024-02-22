@@ -12,7 +12,7 @@
     <img [src]="imageBaseUrl + '/w400' + movie?.poster_path" class="movie-img">
 
     <ion-card-header>
-       <ion-text align="center" color="tertiary">
+       <ion-text color="tertiary">
         <span *ngFor="let g of movie?.genres; let isLast = last">
           {{ g.name }} {{ !isLast ? '·' : '' }}
         </span>
@@ -21,6 +21,17 @@
 
     <ion-card-content>
       <ion-label>{{ movie?.overview }}</ion-label>
+      <br>
+      <br>
+      <ion-text color="primary">
+        <span>Añádela a tu lista:</span>
+      </ion-text>
+      <ion-select interface="popover" placeholder="Seleccionar" class="custom-select">
+        <ion-select-option value="vista">Vista</ion-select-option>
+        <ion-select-option value="quiero_ver">Quiero Ver</ion-select-option>
+      </ion-select>
     </ion-card-content>
+
+
   </ion-card>
 </ion-content>

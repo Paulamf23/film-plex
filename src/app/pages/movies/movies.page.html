@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="light dark">
-    <ion-title class="title"><img class="img-logo" src='../../../assets/logo.png'></ion-title>
+    <ion-title class="title"><img class="img-logo" src='../../../assets/letras.png'></ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
@@ -9,7 +9,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Mostrar la lista de películas solo si no se está realizando una búsqueda -->
   <ion-title class="title" *ngIf="!isSearching">TOP 20</ion-title>
   <ion-list *ngIf="!isSearching">
     <ion-item button *ngFor="let item of movies" [routerLink]="[item.id]">
@@ -23,7 +22,6 @@
     </ion-item>
   </ion-list>
 
-  <!-- Mostrar la lista de películas solo si se está realizando una búsqueda -->
   <ion-list *ngIf="isSearching">
     <ion-item button *ngFor="let item of movies" [routerLink]="[item.id]">
       <ion-avatar slot="start">
