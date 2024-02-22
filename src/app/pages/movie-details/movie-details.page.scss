@@ -1,9 +1,15 @@
-.custom-select {
-    border: 2px solid white; /* Borde blanco */
-    margin-left: 30%;
-    width: 40%; /* Ancho completo */
-  }
+ion-select {
+  border: 1px solid white; 
+  border-radius: 5px; 
+  text-align: center; 
+  width: 30%;
+  margin-left: 35%;
+}
 
-ion-card-content{
+ion-select-option {
+  text-align: center; 
+}
+
+ion-card-content, ion-card-header {
   text-align: center;
-  }
+}
