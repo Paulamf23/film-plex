@@ -1,18 +1,28 @@
 import { Component } from '@angular/core';
+import { LoginService } from './components/login/login.service';
+import firebase from 'firebase/compat/app';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
-  ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+
+  constructor(private _loginService: LoginService) { }
+
+  ngOnInit(): void {
+    firebase.initializeApp({
+      apiKey: "AIzaSyBtv76fuAat5rZDxHrpY_BTUn78ccxNrvg",
+      authDomain: "filmplex-58afc.firebaseapp.com",
+    });
+  }
+
+  estaLogueado() {
+    return this._loginService.estaLogueado();
+  }
+
+  noLogueado() {
+    return this._loginService.noLogueado();
+  }
 }

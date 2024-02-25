@@ -30,4 +30,5 @@ export class MovieService {
       `${environment.baseUrl}/search/movie?api_key=${environment.apiKey}&query=${query}`
     );
   }
+
 }

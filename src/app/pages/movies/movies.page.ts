@@ -49,4 +49,5 @@ export class MoviesPage implements OnInit {
       this.loadMovies();
     }
   }
+  
 }
