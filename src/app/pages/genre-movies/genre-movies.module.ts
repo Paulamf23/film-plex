@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { AdvSearchPageRoutingModule } from './adv-search-routing.module';
-import { AdvancedSearchPage } from './adv-search.page';
+
+import { GenreMoviesPageRoutingModule } from './genre-movies-routing.module';
+
+import { GenreMoviesPage } from './genre-movies.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdvSearchPageRoutingModule
+    GenreMoviesPageRoutingModule
   ],
-  declarations: [AdvancedSearchPage],
-  exports: [AdvancedSearchPage]
+  declarations: [GenreMoviesPage]
 })
-export class AdvSearchPageModule {}
+export class GenreMoviesPageModule {}

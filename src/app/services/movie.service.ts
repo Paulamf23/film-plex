@@ -12,14 +12,14 @@ export interface ApiResult {
   providedIn: 'root'
 })
 export class MovieService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   // Obtener 20 mejores películas
   getTopMovies(): Observable<ApiResult> {
     return this._http.get<ApiResult>(`${environment.baseUrl}/movie/popular?api_key=${environment.apiKey}`);
   }
 
-  // Obtener datos de peliculas
+  // Obtener datos de películas
   getMovieDetails(id: string): Observable<any> {
     return this._http.get(`${environment.baseUrl}/movie/${id}?api_key=${environment.apiKey}`);
   }
@@ -31,4 +31,13 @@ export class MovieService {
     );
   }
 
+  // Obtener lista de géneros
+  getGenres(): Observable<any> {
+    return this._http.get(`${environment.baseUrl}/genre/movie/list?api_key=${environment.apiKey}`);
+  }
+
+  // Obtener películas por género
+  getMoviesByGenre(genreId: number): Observable<ApiResult> {
+    return this._http.get<ApiResult>(`${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&with_genres=${genreId}`);
+  }
 }

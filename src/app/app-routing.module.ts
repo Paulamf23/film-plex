@@ -31,7 +31,13 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'genre-movies/:genreId',
+    loadChildren: () => import('./pages/genre-movies/genre-movies.module').then( m => m.GenreMoviesPageModule)
   }
+  
+
 ];
 
 @NgModule({
