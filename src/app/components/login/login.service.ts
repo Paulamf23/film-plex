@@ -8,29 +8,29 @@ import { CookieService } from "ngx-cookie-service";
 
 
 @Injectable()
-export class LoginService{
+export class LoginService {
     constructor(private router:Router, private cookie:CookieService){}
 
     token!:string;
     registrandose: boolean = false;
 
-    login(email:string, password:string): Promise<void> { // Asegúrate de que la función devuelva una promesa
-      return new Promise((resolve, reject) => { // Devolver una promesa
-          firebase.auth().signInWithEmailAndPassword(email, password)
-              .then(response => {
-                  firebase.auth().currentUser?.getIdToken().then(
-                      token => {
-                          this.token=token;
-                          this.cookie.set("token", token);
-                          resolve(); // Resuelve la promesa si el inicio de sesión es exitoso
-                      }
-                  );
-              })
-              .catch(error => {
-                  this.handleAuthenticationError(error);
-                  reject(error); // Rechaza la promesa si hay un error
-              });
-      });
+    login(email:string, password:string): Promise<void> { 
+        return new Promise((resolve, reject) => { 
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(response => {
+                    firebase.auth().currentUser?.getIdToken().then(
+                        token => {
+                            this.token = token;
+                            this.cookie.set("token", token);
+                            resolve(); 
+                        }
+                    );
+                })
+                .catch(error => {
+                    this.handleAuthenticationError(error);
+                    reject(error); 
+                });
+        });
     }
 
     getIdToken(){
@@ -51,46 +51,48 @@ export class LoginService{
 
     toggleRegistro() {
         this.registrandose = !this.registrandose;
-      }
+    }
 
     registrar(credentials: { email: string, password: string }) {
-      // Reglas de contraseña correctas?
-      if (!this.isValidPassword(credentials.password)) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "El formato de la contraseña no es el esperado.",
-        });
-        return;
-      }
-  
-      firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
-        .then(response => {
-          firebase.auth().currentUser?.getIdToken().then(
-            token => {
-              this.token = token;
-              this.cookie.set("token", token);
-              this.router.navigate(['/listado']);
-            }
-          );
-        });
+      
+        if (!this.isValidPassword(credentials.password)) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El formato de la contraseña no es el esperado.",
+            });
+            return;
+        }
+    
+        firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
+            .then(response => {
+                firebase.auth().currentUser?.getIdToken().then(
+                    token => {
+                        this.token = token;
+                        this.cookie.set("token", token);
+                        this.router.navigate(['/movies']);
+                    }
+                );
+            })
+            .catch(error => {
+                this.handleAuthenticationError(error);
+            });
     }
 
     private isValidPassword(password: string): boolean {
-      const minLength = 6;
-      return password.length >= minLength;
+        const minLength = 6;
+        return password.length >= minLength;
     }
 
     private handleAuthenticationError(error: any) {
-      let errorMessage = "Algo no salió bien!";
-      let especific = "Comprueba el correo o la contraseña";
-    
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: errorMessage,
-        footer: especific
-      });
+        let errorMessage = "Algo no salió bien!";
+        let especific = "Comprueba el correo o la contraseña";
+
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: errorMessage,
+            footer: especific
+        });
     }
-    
 }

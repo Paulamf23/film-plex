@@ -22,7 +22,6 @@ import { LoginGuardian } from './components/login/guardian';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule, 
     FormsModule
   ],

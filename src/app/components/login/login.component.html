@@ -1,8 +1,20 @@
 <ion-content class="ion-padding">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="cerrarPagina()">
+          <ion-icon name="close" style="color: #f4b953;"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title class="custom-title">
+        {{ registrandose ? 'Regístrate' : 'Iniciar Sesión' }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
   <ng-container *ngIf="!registrandose; else registroTemplate">
     <!-- Formulario de inicio de sesión -->
     <form #miFormulario="ngForm" (ngSubmit)="login(miFormulario)">
-      <h2 style="font-weight: bold; color: primary; text-align: center;">Iniciar Sesión</h2>
       <br>
       <ion-item>
         <ion-label position="floating">Correo electrónico</ion-label>
@@ -13,7 +25,7 @@
         <ion-input type="password" name="password" ngModel aria-label="Contraseña"></ion-input>
       </ion-item>
       <br>
-      <ion-button expand="block" type="submit" color="primary">Enviar</ion-button>
+      <ion-button expand="block" type="submit" color="primary">Entar</ion-button>
     </form>
     <p style="text-align: center;">¿No estás registrado? <a (click)="toggleRegistro()">Regístrate</a></p>
   </ng-container>
@@ -21,7 +33,6 @@
   <ng-template #registroTemplate>
     <!-- Formulario de registro -->
     <form #miFormularioRegistro="ngForm" (ngSubmit)="registrar(miFormularioRegistro)">
-      <h2 style="font-weight: bold; color: primary; text-align: center;">Registrar</h2>
       <br>
       <ion-item>
         <ion-label position="floating">Correo electrónico</ion-label>

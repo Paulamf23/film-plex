@@ -12,7 +12,6 @@ const routes: Routes = [
   {
     path: 'movies',
     loadChildren: () => import('./pages/movies/movies.module').then( m => m.MoviesPageModule),
-    canActivate: [LoginGuardian]
   },
   {
     path: 'movies/:id',
@@ -22,11 +21,12 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [LoginGuardian]
   },
   {
     path: 'adv-search',
     loadChildren: () => import('./pages/adv-search/adv-search.module').then( m => m.AdvSearchPageModule),
-
+    canActivate: [LoginGuardian]
   },
   {
     path: 'login',

@@ -20,6 +20,14 @@
             <ion-icon name="search" color="primary" slot="start"></ion-icon>
             <ion-label>Advanced Search</ion-label>
           </ion-item>
+          <ion-item routerLink="/login" class="sesion" *ngIf="!estaLogueado()">
+            <ion-icon name="init" color="primary" slot="start"></ion-icon>
+            <ion-label>Iniciar Sesión</ion-label>
+          </ion-item>
+          <ion-item class="sesion" (click)="noLogueado()" *ngIf="estaLogueado()">
+            <ion-icon name="init" color="primary" slot="start"></ion-icon>
+            <ion-label>Cerrar Sesión</ion-label>
+          </ion-item>
         </ion-menu-toggle>
         
       </ion-list>

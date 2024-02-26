@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  registrandose: boolean = false; // Definición de la propiedad registrandose
+  registrandose: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -27,12 +27,11 @@ export class LoginComponent {
         this.router.navigateByUrl(returnUrl);
       })
       .catch(error => {
-        // Manejar errores de inicio de sesión aquí
       });
   }
 
   toggleRegistro() {
-    this.registrandose = !this.registrandose; // Implementación del método toggleRegistro
+    this.registrandose = !this.registrandose;
   }
 
   registrar(form: NgForm) {
@@ -40,5 +39,9 @@ export class LoginComponent {
     const password = form.value.password;
   
     this.loginService.registrar({ email, password });
+  }
+
+  cerrarPagina() {
+    this.router.navigate(['/movies']);
   }
 }
