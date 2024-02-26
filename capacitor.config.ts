@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'FilmPlex',
+  appId: 'com.example.app',
+  appName: 'film-plex',
   webDir: 'www',
   server: {
     androidScheme: 'https'
