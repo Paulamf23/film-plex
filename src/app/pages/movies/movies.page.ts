@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { MovieService } from 'src/app/services/movie.service';
 import { environment } from 'src/environments/environment';
-import { Plugins } from '@capacitor/core';
-
-const { SpeechRecognition } = Plugins;
+import { Plugins } from '@capacitor/core'; // Importa Plugins desde '@capacitor/core'
+import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 
 @Component({
   selector: 'app-movies',
@@ -19,12 +18,12 @@ export class MoviesPage implements OnInit {
   isSearching: boolean = false;
   recording = false;
 
-  constructor(private _movieService: MovieService, private _loadingCtrl: LoadingController) {
-    SpeechRecognition['requestPermission']();
-  }
+  constructor(private _movieService: MovieService, private _loadingCtrl: LoadingController) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadMovies();
+    await Plugins['SpeechRecognition']['requestPermission'](); // Solicita permiso de reconocimiento de voz
+    
   }
 
   async loadMovies() {
@@ -45,21 +44,21 @@ export class MoviesPage implements OnInit {
   }
 
   async startRecognition(){
-    const { available } = await SpeechRecognition['available']();
-
+    const { available } = await SpeechRecognition.available();
+  
     if (available){
       this.recording = true;
-      SpeechRecognition['start']({
+      SpeechRecognition.start({
         language: 'en-US',
         popup: false,
         partialResults: true,
       });
-
-      SpeechRecognition['addListener']('result', (data:any)=>{
-        console.log('result was fired', data.results);
-        if (data.results && data.results.length > 0){
-          this.searchQuery = data.results[0].trim();
-          this.searchMovies(); 
+  
+      SpeechRecognition.addListener('partialResults', (data:any)=>{
+        console.log('partialResults was fired', data.matches);
+        if (data.matches && data.matches.length > 0){
+          this.searchQuery = data.matches[0].trim(); // Establece el primer resultado como la consulta de búsqueda
+          this.searchMovies(); // Realiza la búsqueda automáticamente
         }
       });
     }
