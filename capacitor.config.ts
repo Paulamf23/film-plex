@@ -1,9 +1,14 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
-const config: CapacitorConfig = {
+interface ExtendedCapacitorConfig extends CapacitorConfig {
+  icon?: string;
+}
+
+const config: ExtendedCapacitorConfig = {
   appId: 'com.example.app',
   appName: 'film-plex',
   webDir: 'www',
+  icon: 'src\assets\icon\icon.png', 
   server: {
     androidScheme: 'https'
   }
