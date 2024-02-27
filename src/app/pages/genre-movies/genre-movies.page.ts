@@ -14,6 +14,7 @@ export class GenreMoviesPage implements OnInit {
   movies: any[] = [];
   genreId: number | undefined;
   imageBaseUrl = environment.images;
+  currentPage = 1;
 
   constructor(private _movieService: MovieService, private _navCtrl: NavController, private _route: ActivatedRoute) { }
 
@@ -28,9 +29,19 @@ export class GenreMoviesPage implements OnInit {
 
   getMoviesByGenre(genreId: number) {
     this._movieService.getMoviesByGenre(genreId).subscribe((data: any) => {
-      this.movies = data.results;
+      this.movies = [...this.movies, ...data.results];
     });
   }
+  
+
+  loadMore(event: any) {
+    if (this.genreId !== undefined) {
+      this.currentPage++;
+      this.getMoviesByGenre(this.genreId);
+      event.target.complete();
+    }
+  }
+  
 
   goBack() {
     this._navCtrl.navigateBack('/adv-search');
