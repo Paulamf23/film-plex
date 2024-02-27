@@ -17,10 +17,11 @@ export class MoviesPage implements OnInit {
   imageBaseUrl = environment.images;
   searchQuery: string = '';
   isSearching: boolean = false;
-  recognitionActive: boolean = false;
-  transcription: string = '';
+  recording = false;
 
-  constructor(private _movieService: MovieService, private _loadingCtrl: LoadingController) {}
+  constructor(private _movieService: MovieService, private _loadingCtrl: LoadingController) {
+    SpeechRecognition['requestPermission']();
+  }
 
   ngOnInit() {
     this.loadMovies();
@@ -43,32 +44,30 @@ export class MoviesPage implements OnInit {
     }
   }
 
-  async startSpeechRecognition() {
-    try {
-      const available = await SpeechRecognition['isAvailable']();
-      if (available) {
-        await SpeechRecognition['startListening']({
-          language: 'en-US',
-          showPopup: true,
-        });
-        SpeechRecognition['addListener']('result', (result: any) => {
-          this.searchQuery = result.transcription;
-          this.searchMovies();
-        });
-        this.recognitionActive = true;
-      }
-    } catch (error) {
-      console.error(error);
+  async startRecognition(){
+    const { available } = await SpeechRecognition['available']();
+
+    if (available){
+      this.recording = true;
+      SpeechRecognition['start']({
+        language: 'en-US',
+        popup: false,
+        partialResults: true,
+      });
+
+      SpeechRecognition['addListener']('result', (data:any)=>{
+        console.log('result was fired', data.results);
+        if (data.results && data.results.length > 0){
+          this.searchQuery = data.results[0].trim();
+          this.searchMovies(); 
+        }
+      });
     }
   }
 
-  async stopSpeechRecognition() {
-    try {
-      await SpeechRecognition['stopListening']();
-      this.recognitionActive = false;
-    } catch (error) {
-      console.error(error);
-    }
+  async stopRecognition(){
+    this.recording  = false;
+    await SpeechRecognition['stop']();
   }
 
   searchMovies() {
@@ -82,13 +81,4 @@ export class MoviesPage implements OnInit {
       this.loadMovies();
     }
   }
-  
-  toggleRecognition() {
-    if (this.recognitionActive) {
-      this.stopSpeechRecognition();
-    } else {
-      this.startSpeechRecognition();
-    }
-  }
-  
 }

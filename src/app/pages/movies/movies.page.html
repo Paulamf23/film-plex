@@ -5,9 +5,11 @@
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
     <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="searchMovies()" class="custom-searchbar">
-      <ion-button slot="end" (click)="toggleRecognition()" fill="clear">
-        <ion-icon *ngIf="!recognitionActive" name="mic"></ion-icon>
-        <ion-icon *ngIf="recognitionActive" name="mic-off"></ion-icon>
+      <ion-button slot="end" (click)="startRecognition()" *ngIf="!recording" fill="clear">
+        <ion-icon name="mic-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" (click)="stopRecognition()" *ngIf="recording" fill="clear">
+        <ion-icon name="mic-off-outline"></ion-icon>
       </ion-button>
     </ion-searchbar>
   </ion-toolbar>
