@@ -11,8 +11,8 @@ import { LoginComponent } from './components/login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule } from '@angular/forms';
 import { LoginGuardian } from './components/login/guardian';
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -22,8 +22,8 @@ import { LoginGuardian } from './components/login/guardian';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    // AngularFireModule.initializeApp(environment.firebaseConfig),
-    // AngularFireAuthModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, LoginService, CookieService, LoginGuardian],
   bootstrap: [AppComponent],
