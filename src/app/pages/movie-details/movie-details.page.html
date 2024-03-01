@@ -23,13 +23,12 @@
       <ion-label>{{ movie?.overview }}</ion-label>
       <br>
       <br>
-      <ion-text color="primary">
-        <span>Añádela a tu lista:</span>
-      </ion-text>
-      <ion-select placeholder="Seleccionar">
-        <ion-select-option value="vista">Vista</ion-select-option>
-        <ion-select-option value="quiero_ver">Quiero Ver</ion-select-option>
-      </ion-select>                      
+      <ion-button *ngIf="!isFavorite" (click)="addToFavorites(movie.id)">
+        Añadir a favoritos
+      </ion-button>
+      <ion-button *ngIf="isFavorite" (click)="removeFromFavorites(movie.id)">
+        Eliminar de favoritos
+      </ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
