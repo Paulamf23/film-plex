@@ -5,12 +5,45 @@
     </ion-buttons>
     <ion-title>Perfil</ion-title>
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Perfil del usuario -->
   <div class="profile-header">
     <img src="../../../assets/pngtree-the-icon-app-icon-showing-a-man-wearing-sunglasses-image_2941658.jpg" alt="Imagen de perfil">
     <h2>{{ userEmail }}</h2>
   </div>
+
+  <!-- Lista de películas favoritas -->
+  <div class="favorite-movies">
+    <div class="star">
+      <ion-icon name="star" class="star-icon"></ion-icon>
+    </div>
+    <div class="movies-text">
+      <h3>Películas Favoritas</h3>
+    </div>
+  </div>
+    <br>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" *ngIf="favoriteMovies.length > 0; else noFavorites">
+          <ion-list>
+            <ion-item *ngFor="let movie of favoriteMovies">
+              <ion-avatar slot="start">
+                <img [src]="imageBaseUrl + '/w92' + movie.poster_path"/>
+              </ion-avatar>
+              <ion-label>
+                <h2>{{ movie.title }}</h2>
+                <p>{{ movie.release_date | date:'y' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+    <ng-template #noFavorites>
+      <p>No hay películas favoritas</p>
+    </ng-template>
+
 </ion-content>

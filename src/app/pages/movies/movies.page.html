@@ -26,6 +26,7 @@
         {{ item.title }}
         <p>{{ item.release_date | date:'y' }}</p>
       </ion-label>
+      <ion-icon slot="end" [name]="isFavorite(item.id) ? 'star' : 'star-outline'"></ion-icon>
     </ion-item>
   </ion-list>
 
@@ -38,6 +39,7 @@
         {{ item.title }}
         <p>{{ item.release_date | date:'y' }}</p>
       </ion-label>
+      <ion-icon slot="end" [name]="isFavorite(item.id) ? 'star' : 'star-outline'"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -23,7 +23,6 @@ export class MovieDetailsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const database = firebase.database();
     const id = this._route.snapshot.paramMap.get('id');
     if (id) {
       this._movieService.getMovieDetails(id).subscribe(res => {
