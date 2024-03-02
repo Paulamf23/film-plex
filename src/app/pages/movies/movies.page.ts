@@ -29,7 +29,6 @@ export class MoviesPage implements OnInit {
 
   async ngOnInit() {
     this.loadMovies();
-    this.loadFavoriteMovieIds();
     await Plugins['SpeechRecognition']['requestPermission']();
   }
 
@@ -56,29 +55,6 @@ export class MoviesPage implements OnInit {
     } else {
       this.searchMovies();
     }
-  }
-
-  async loadFavoriteMovieIds() {
-    const user = await this._afAuth.currentUser;
-    if (user) {
-      const userId = user.uid;
-      firebase.database().ref(`favorites/${userId}`).once('value').then(snapshot => {
-        const favoriteMoviesObject = snapshot.val();
-        if (favoriteMoviesObject) {
-          this.favoriteMovieIds = Object.keys(favoriteMoviesObject);
-        } else {
-          this.favoriteMovieIds = [];
-        }
-        // Después de cargar los IDs de las películas favoritas, cargar las películas
-        this.loadMovies();
-      }).catch(error => {
-        console.error("Error loading favorite movie ids:", error);
-      });
-    }
-  }
-
-  isFavorite(movieId: string): boolean {
-    return this.favoriteMovieIds.includes(movieId);
   }
 
   async startRecognition() {
