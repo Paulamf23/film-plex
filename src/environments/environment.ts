@@ -1,4 +1,3 @@
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 
 export const environment = {
@@ -17,4 +16,3 @@ export const environment = {
   }
 };
 
-firebase.initializeApp(environment.firebaseConfig);

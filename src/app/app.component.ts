@@ -1,21 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from './components/login/login.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth'; 
 import firebase from 'firebase/compat/app';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private _loginService: LoginService) { }
+  constructor(
+    private _loginService: LoginService,
+    private auth: AngularFireAuth 
+  ) { }
 
   ngOnInit(): void {
-    firebase.initializeApp({
-      apiKey: "AIzaSyBtv76fuAat5rZDxHrpY_BTUn78ccxNrvg",
-      authDomain: "filmplex-58afc.firebaseapp.com",
-    });
+    firebase.initializeApp(environment.firebaseConfig); 
   }
 
   estaLogueado() {
