@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginGuardian } from './components/login/guardian';
+import { LoginGuardian } from './services/guardian';
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [

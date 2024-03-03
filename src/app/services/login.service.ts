@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import Swal from 'sweetalert2';
 
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth';
@@ -9,17 +8,21 @@ import { CookieService } from "ngx-cookie-service";
 
 @Injectable()
 export class LoginService {
-    constructor(private router:Router, private cookie:CookieService){}
+    constructor(private router: Router, private cookie: CookieService) {}
 
-    token!:string;
-    registrandose: boolean = false;
+    token!: string; 
+    registrandose: boolean = false; 
 
-    login(email:string, password:string): Promise<void> { 
-        return new Promise((resolve, reject) => { 
+    // Método para iniciar sesión
+    login(email: string, password: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // Iniciar sesión con Firebase Authentication
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(response => {
+                    // Obtener el token de autenticación del usuario
                     firebase.auth().currentUser?.getIdToken().then(
                         token => {
+                            // Almacenar el token en las cookies
                             this.token = token;
                             this.cookie.set("token", token);
                             resolve(); 
@@ -33,66 +36,70 @@ export class LoginService {
         });
     }
 
-    getIdToken(){
+    // Método para obtener el token de autenticación del usuario desde las cookies
+    getIdToken() {
         return this.cookie.get("token");
     }
 
-    estaLogueado(){
+    // Método para verificar si el usuario está autenticado
+    estaLogueado() {
         return this.cookie.get("token");
     }
 
-    noLogueado(){
-        firebase.auth().signOut().then(()=>{
-            this.token="";
-            this.cookie.set("token", this.token);
-            this.router.navigate(['/']);
+    // Método para cerrar la sesión del usuario
+    noLogueado() {
+        // Cerrar sesión con Firebase Authentication y redirigir al usuario a la página principal
+        firebase.auth().signOut().then(() => {
+            this.token = ""; 
+            this.cookie.set("token", this.token); 
+            this.router.navigate(['/']); 
         });
     }
 
+    // Método para cambiar entre el proceso de registro e inicio de sesión
     toggleRegistro() {
         this.registrandose = !this.registrandose;
     }
 
+    // Método para registrar un nuevo usuario
     registrar(credentials: { email: string, password: string }) {
-      
         if (!this.isValidPassword(credentials.password)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "El formato de la contraseña no es el esperado.",
-            });
+            // Validar la contraseña y mostrar una alerta si no cumple con los requisitos
+            alert("El formato de la contraseña no es el esperado.");
             return;
         }
-    
+
+        // Registrar un nuevo usuario con Firebase Authentication
         firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
             .then(response => {
+                // Obtener el token de autenticación del usuario registrado
                 firebase.auth().currentUser?.getIdToken().then(
                     token => {
+                        // Almacenar el token en las cookies
                         this.token = token;
                         this.cookie.set("token", token);
-                        this.router.navigate(['/movies']);
+                        this.router.navigate(['/movies']); 
                     }
                 );
             })
             .catch(error => {
+                // Manejar errores de autenticación durante el registro
                 this.handleAuthenticationError(error);
             });
     }
 
+    // Método para validar la longitud de la contraseña
     private isValidPassword(password: string): boolean {
         const minLength = 6;
         return password.length >= minLength;
     }
 
+    // Método para manejar errores de autenticación
     private handleAuthenticationError(error: any) {
         let errorMessage = "Algo no salió bien!";
         let especific = "Comprueba el correo o la contraseña";
 
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: errorMessage,
-            footer: especific
-        });
+        // Mostrar una alerta con el mensaje de error
+        alert(errorMessage + "\n" + especific);
     }
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './components/login/login.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; 
 import firebase from 'firebase/compat/app';
 import { environment } from 'src/environments/environment';
 
@@ -11,20 +9,10 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    private _loginService: LoginService,
-    private auth: AngularFireAuth 
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     firebase.initializeApp(environment.firebaseConfig); 
   }
 
-  estaLogueado() {
-    return this._loginService.estaLogueado();
-  }
-
-  noLogueado() {
-    return this._loginService.noLogueado();
-  }
 }
